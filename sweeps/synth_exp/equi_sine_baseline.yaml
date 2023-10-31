@@ -1,0 +1,52 @@
+project: ddflow_equi_sine_v0.1
+program: train_sweep.py
+method: grid
+metric:
+  name: valid_loss_cmin_dl0
+  goal: minimize
+parameters:
+  default_configs:
+    value: "configs/defaults/equi_sine.yaml"
+
+  # opt
+  lr:
+    values: [0.001, 0.003, 0.01, 0.03]
+  wd:
+    values: [1.0e-3, 1.0e-2, 1.0e-1]
+  bs:
+    values: [32, 256, 1024]
+  opt:
+    value: "adamax"
+  scheduler:
+    value: "steplr"
+
+  seed:
+    values: [42]
+
+  # flow params
+  hidden_units:
+    values: [[32, 32], [64, 64], [128, 128]]
+  num_layers:
+    values: [3, 5]
+  num_bins:
+    values: [16, 64]
+  flow_type:
+    value: "unconstrained_rational_quadratic"
+  activation:
+    value: "swish"
+  shuffle:
+    value: True
+  actnorm:
+    value: True
+
+  # training
+  epochs:
+    values: [100, 250, 500]
+  grad_clip:
+    value: 0.0
+
+  # experiment setup
+  default_param:
+    values: [0.0]
+  opt_params:
+    value: False

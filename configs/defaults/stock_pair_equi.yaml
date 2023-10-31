@@ -1,0 +1,81 @@
+experiment: "equi"
+
+# flow param
+hidden_units: [32, 32]
+num_layers: 8
+flow_type: "affine"
+activation: "swish"
+shuffle: False
+
+# spline only
+num_bins: 20
+
+# affine only
+actnorm: true
+scale: "sigmoid_p05"
+
+# dependencies
+param_activation: "sigmoid"
+default_param: 0.2
+opt_params: true
+
+num_threads: 1
+
+seed: 42
+num_log: 2000
+
+data_param:
+  bs: 256
+  dset: "stock_pair"
+  incl_inds: true
+  equi_or_rm: "equi"
+  ticks_or_pairs: ["v-ma", "aapl-msft"]
+  start_year: 1980
+  end_year: 2018
+
+use_wandb: true
+# how often to sample images
+log_sample_freq: 25
+
+epochs: 10
+
+# opt + scheduler
+scheduler: "steplr"
+opt: "adamax"
+lr: 0.01
+wd: 0.0
+pct_start: 0.3
+div_factor: 25
+final_div_factor: 10_000
+steplr_steps: 32
+gamma: 0.9
+lr_warmup_epochs: 1
+cosine_num_restarts: 5
+
+# run_flow params
+add_callbacks: ["modelsummary"]
+save_checkpoint: false
+log_freq: 25
+log: null
+project: "ddflow_stock_pair_equi_v0.1"
+
+# trainer
+gpus: 0
+strategy: null
+fast_dev_run: false
+log_every_n_steps: 25
+grad_clip: 0.0
+clip_type: "value"
+
+large_batch: false
+soft_max_size: 28
+hard_max_size: 28
+
+alternating: false
+alternating_steps: 0
+main_stage_epochs: 0
+lam_stage_epochs: 0
+lam_stage_gpus: 0
+retain_lr: true
+lam_lr: 0.0
+lam_wd: 0.0

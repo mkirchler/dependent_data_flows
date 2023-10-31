@@ -1,0 +1,67 @@
+experiment: "equi"
+
+# flow param
+param_activation: "sigmoid"
+default_param: 0.1
+opt_params: false
+num_scales: 2
+num_steps: 12
+flow_type: "img"
+
+seed: 123
+num_log: 9
+
+data_param:
+  dset: "adni"
+  bs: 32
+  num_workers: 6
+  incl_inds: true
+  size: 64
+  equi_or_rm: "equi"
+
+# TODO: both in one...
+use_wandb: true
+log_sample_freq: 10
+
+epochs: 10
+
+# opt + scheduler
+scheduler: "steplr"
+opt: "adam"
+lr: 1.0e-3
+wd: 1.0e-4
+pct_start: 0.3
+div_factor: 25
+final_div_factor: 10_000
+steplr_steps: 32
+gamma: 0.9
+lr_warmup_epochs: 1
+cosine_num_restarts: 5
+
+# run_flow params
+add_callbacks: ["gpustats", "modelsummary"]
+save_checkpoint: false
+log_freq: 10
+log: null
+project: "ddflow_adni_v0.0"
+
+# trainer
+gpus: 1
+strategy: null
+fast_dev_run: false
+log_every_n_steps: 10
+grad_clip: 0.0
+clip_type: "value"
+
+large_batch: False
+soft_max_size: 28
+hard_max_size: 28
+
+alternating: False
+alternating_steps: 0
+main_stage_epochs: 0
+lam_stage_epochs: 1
+lam_stage_gpus: 1
+retain_lr: true
+lam_lr: 1.0e-2
+lam_wd: 1.0e-4

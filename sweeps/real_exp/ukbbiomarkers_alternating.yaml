@@ -1,0 +1,71 @@
+project: ddflow_ukb_biomarker_v0.1
+program: train_sweep.py
+method: grid
+metric:
+  name: valid_loss_cmin_dl0
+  goal: minimize
+parameters:
+  default_configs:
+    value: "configs/defaults/ukb_biomarker_rm.yaml"
+
+  # opt
+  lr:
+    values: [0.001, 0.003, 0.01, 0.03]
+  wd:
+    values: [0.001, 0.01, 0.1]
+  bs:
+    values: [256]
+  opt:
+    value: "adamax"
+  scheduler:
+    value: "steplr"
+
+  # flow params
+  hidden_units:
+    value: [128, 128]
+  num_layers:
+    values: [16]
+  flow_type:
+    value: "affine"
+  activation:
+    value: "swish"
+  shuffle:
+    value: True
+  actnorm:
+    value: True
+
+  # training
+  epochs:
+    values: [5, 25]
+  grad_clip:
+    value: 0.0
+
+  # experiment setup
+  default_param:
+    values: [0.99, 0.90, 0.75, 0.5]
+  opt_params:
+    value: True
+  init_default_param:
+    value: null
+  fine_tune:
+    value: False
+  alternating:
+    value: "lam"
+  alternating_steps:
+    values: [4]
+  main_stage_epochs:
+    values: [5, 25]
+  lam_stage_epochs:
+    values: [100]
+  retain_lr:
+    value: true
+  lam_lr:
+    values: [0.03, 0.1, 0.3]
+  lam_wd:
+    value: 0.0
+
+  seed:
+    values: [1000, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 1008, 1009]
+
+  nan_threshold:
+    value: 0.95

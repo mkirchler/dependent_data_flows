@@ -1,0 +1,90 @@
+experiment: "rm"
+skip_final_eval: True
+
+# flow param
+hidden_units: [100, 100, 100]
+num_layers: 3
+flow_type: "unconstrained_rational_quadratic"
+activation: "swish"
+shuffle: False
+
+# spline only
+num_bins: 50
+bound: 4.5
+# bound: 16 ## ccube
+# bound: 8 ## cres
+# bound: 4.5 ## abs
+# bound: 5.0 ## sign
+
+# affine only
+actnorm: true
+scale: "sigmoid_p05"
+
+# dependencies
+param_activation: "sigmoid"
+default_param: 0.0
+opt_params: false
+
+num_threads: 1
+
+seed: 42
+num_log: 2000
+
+data_param:
+  bs: 256
+  dset: "cov-sine"
+  incl_inds: true
+  N: 5000
+  N_valid: 5000
+  lam: 0.5
+  chol_sparsity: 0.0
+  chol_min: 0.5
+  chol_max: 0.99
+  sparsify: 0.0
+
+use_wandb: true
+# how often to sample images
+log_sample_freq: 50
+
+epochs: 250
+
+# opt + scheduler
+scheduler: "steplr"
+opt: "adamax"
+lr: 0.005
+wd: 0.0
+pct_start: 0.3
+div_factor: 25
+final_div_factor: 10_000
+steplr_steps: 32
+gamma: 0.9
+lr_warmup_epochs: 1
+cosine_num_restarts: 5
+
+# run_flow params
+add_callbacks: ["modelsummary"]
+save_checkpoint: false
+log_freq: 50
+log: null
+project: "ddflow_rm_sine_v0.0"
+
+# trainer
+gpus: 0
+strategy: null
+fast_dev_run: false
+log_every_n_steps: 50
+grad_clip: 0.0
+clip_type: "value"
+
+large_batch: false
+soft_max_size: 28
+hard_max_size: 28
+
+alternating: false
+alternating_steps: 0
+main_stage_epochs: 0
+lam_stage_epochs: 0
+lam_stage_gpus: 0
+retain_lr: true
+lam_lr: 0.0
+lam_wd: 0.0
